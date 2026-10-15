@@ -1,46 +1,89 @@
-DOMAIN-SUFFIX, chatgpt.com
-DOMAIN-SUFFIX, openai.com
-DOMAIN-SUFFIX, sora.com
-DOMAIN-SUFFIX, ai.com
-DOMAIN-SUFFIX, searchgpt.com
+# 1. 核心业务域名
+HOST-SUFFIX, chatgpt.com, OpenAI
+HOST-SUFFIX, openai.com, OpenAI
+HOST-SUFFIX, chat.com, OpenAI
+HOST-SUFFIX, ai.com, OpenAI
+HOST-SUFFIX, sora.com, OpenAI
+HOST-SUFFIX, searchgpt.com, OpenAI
+HOST-SUFFIX, openai.org, OpenAI
 
-DOMAIN-SUFFIX, oaistatic.com
-DOMAIN-SUFFIX, oaiusercontent.com
-DOMAIN-SUFFIX, openaicom.imgix.net
-DOMAIN-SUFFIX, openaiapi-site.azureedge.net
-DOMAIN-SUFFIX, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
-DOMAIN-SUFFIX, openaicomproductionae4b.blob.core.windows.net
-DOMAIN-SUFFIX, production-openaicom-storage.azureedge.net
-DOMAIN-SUFFIX, chat.openai.com.cdn.cloudflare.net
+# 2. 静态资源、图片生成与 Azure/Cloudflare 存储 CDN
+HOST-SUFFIX, oaistatic.com, OpenAI
+HOST-SUFFIX, oaiusercontent.com, OpenAI
+HOST-SUFFIX, openaicom.imgix.net, OpenAI
+HOST-SUFFIX, oai.azureedge.net, OpenAI
+HOST-SUFFIX, openaiapi-site.azureedge.net, OpenAI
+HOST-SUFFIX, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net, OpenAI
+HOST-SUFFIX, openaicomproductionae4b.blob.core.windows.net, OpenAI
+HOST-SUFFIX, production-openaicom-storage.azureedge.net, OpenAI
+HOST-SUFFIX, chat.openai.com.cdn.cloudflare.net, OpenAI
 
-DOMAIN-SUFFIX, featuregates.org
-DOMAIN-SUFFIX, statsigapi.net
-DOMAIN-SUFFIX, statsig.com
-DOMAIN-SUFFIX, prodregistryv2.org
-DOMAIN-SUFFIX, beyondwickedmapping.org
-DOMAIN-SUFFIX, launchdarkly.com
+# 3. 地区判定、灰度开关 (FeatureGate) 与 A/B 测试（防香港漏网核心）
+HOST-SUFFIX, featuregates.org, OpenAI
+HOST-SUFFIX, statsigapi.net, OpenAI
+HOST-SUFFIX, statsig.com, OpenAI
+HOST-SUFFIX, events.statsigapi.net, OpenAI
+HOST-SUFFIX, prodregistryv2.org, OpenAI
+HOST-SUFFIX, beyondwickedmapping.org, OpenAI
+HOST-SUFFIX, launchdarkly.com, OpenAI
+HOST-SUFFIX, clientstream.launchdarkly.com, OpenAI
+HOST-SUFFIX, app.launchdarkly.com, OpenAI
+HOST-SUFFIX, events.launchdarkly.com, OpenAI
 
-DOMAIN-SUFFIX, auth0.com
-DOMAIN-SUFFIX, workos.com
-DOMAIN-SUFFIX, arkoselabs.com
-DOMAIN-SUFFIX, client-api.arkoselabs.com
-DOMAIN-SUFFIX, funcaptcha.com
-DOMAIN-SUFFIX, identrust.com
-DOMAIN-SUFFIX, challenges.cloudflare.com
+# 4. 登录鉴权、Cloudflare 过盾与人机验证
+HOST-SUFFIX, auth0.com, OpenAI
+HOST-SUFFIX, workos.com, OpenAI
+HOST-SUFFIX, authkit.app, OpenAI
+HOST-SUFFIX, arkoselabs.com, OpenAI
+HOST-SUFFIX, client-api.arkoselabs.com, OpenAI
+HOST-SUFFIX, openai-api.arkoselabs.com, OpenAI
+HOST-SUFFIX, funcaptcha.com, OpenAI
+HOST-SUFFIX, identrust.com, OpenAI
+HOST-SUFFIX, challenges.cloudflare.com, OpenAI
+HOST-SUFFIX, cloudflare.com, OpenAI
+HOST-SUFFIX, cloudflareinsights.com, OpenAI
+HOST-SUFFIX, recaptcha.net, OpenAI
 
-DOMAIN-SUFFIX, livekit.cloud
-DOMAIN-SUFFIX, turn.livekit.cloud
+# 5. 实时语音模式 (WebRTC / LiveKit)
+HOST-SUFFIX, livekit.cloud, OpenAI
+HOST-SUFFIX, turn.livekit.cloud, OpenAI
+HOST-SUFFIX, host.livekit.cloud, OpenAI
+HOST-SUFFIX, chatgpt.livekit.cloud, OpenAI
 
-DOMAIN-SUFFIX, stripe.com
-DOMAIN-SUFFIX, stripe.network
-DOMAIN-SUFFIX, intercom.io
-DOMAIN-SUFFIX, intercomcdn.com
-DOMAIN-SUFFIX, sentry.io
-DOMAIN-SUFFIX, datadoghq.com
-DOMAIN-SUFFIX, braze.com
-DOMAIN-SUFFIX, segment.io
+# 6. 支付校验与客户端遥测风控
+HOST-SUFFIX, stripe.com, OpenAI
+HOST-SUFFIX, stripe.network, OpenAI
+HOST-SUFFIX, intercom.io, OpenAI
+HOST-SUFFIX, intercomcdn.com, OpenAI
+HOST-SUFFIX, sentry.io, OpenAI
+HOST-SUFFIX, datadoghq.com, OpenAI
+HOST-SUFFIX, browser-intake-datadoghq.com, OpenAI
+HOST-SUFFIX, braze.com, OpenAI
+HOST-SUFFIX, segment.io, OpenAI
+HOST-SUFFIX, revenuecat.com, OpenAI
 
-DOMAIN-KEYWORD, openai
-DOMAIN-KEYWORD, chatgpt
-USER-AGENT, ChatGPT*
-USER-AGENT, *com.openai.chat*
+# 7. 关键词与客户端 User-Agent 兜底（拦截 App 一切未知域名请求）
+HOST-KEYWORD, openai, OpenAI
+HOST-KEYWORD, chatgpt, OpenAI
+HOST-KEYWORD, oaistatic, OpenAI
+HOST-KEYWORD, oaiusercontent, OpenAI
+USER-AGENT, ChatGPT*, OpenAI
+USER-AGENT, *com.openai.chat*, OpenAI
+USER-AGENT, *OpenAI*, OpenAI
+
+# 8. OpenAI 专属 IP 段与 Anycast 节点（拦截不带域名的纯 IP 探测）
+IP-CIDR, 24.199.123.28/32, OpenAI
+IP-CIDR, 64.23.132.171/32, OpenAI
+IP-CIDR, 104.18.32.47/32, OpenAI
+IP-CIDR, 104.18.33.45/32, OpenAI
+IP-CIDR, 172.64.154.211/32, OpenAI
+IP-CIDR, 172.64.155.209/32, OpenAI
+IP-CIDR, 23.98.142.176/28, OpenAI
+IP-CIDR, 23.102.140.112/28, OpenAI
+IP-CIDR, 40.84.180.224/28, OpenAI
+IP-CIDR, 13.66.11.96/28, OpenAI
+IP-CIDR, 172.182.202.0/25, OpenAI
+IP-CIDR, 172.182.204.0/24, OpenAI
+IP-CIDR, 172.182.207.0/25, OpenAI
+IP-CIDR, 172.182.214.0/24, OpenAI
+IP-CIDR, 172.182.215.0/24, OpenAI
